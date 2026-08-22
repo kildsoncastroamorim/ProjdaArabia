@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Painel Financeiro Executivo 2027</title>
+<style>
+:root{--navy:#112f57;--navy2:#1d4e89;--bg:#f3f6fa;--card:#fff;--text:#172033;--muted:#6b778c;--border:#dde5ef;--green:#1f8a70;--amber:#d99000;--red:#c74545;--blue:#2e76c7;--shadow:0 10px 30px rgba(25,45,75,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.header{background:linear-gradient(120deg,var(--navy),#214f83);color:#fff;padding:24px 28px 20px;box-shadow:var(--shadow)}
+.header h1{margin:0 0 6px;font-size:24px;letter-spacing:.2px}.header p{margin:0;color:#d8e5f6;font-size:13px}.wrap{max-width:1500px;margin:auto;padding:22px}
+.toolbar{display:flex;gap:14px;align-items:end;flex-wrap:wrap;margin-bottom:16px}.control{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:190px}.control label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}.control select{width:100%;border:0;background:transparent;font-size:15px;color:var(--text);outline:0}.source{margin-left:auto;color:var(--muted);font-size:12px;max-width:520px}.source a{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px;min-width:0}.kpi{grid-column:span 3}.kpi .label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}.kpi .value{font-size:26px;font-weight:800;margin-top:8px}.kpi .sub{font-size:12px;color:var(--muted);margin-top:6px}.accent{border-top:4px solid var(--blue)}.positive{border-top-color:var(--green)}.warning{border-top-color:var(--amber)}.danger{border-top-color:var(--red)}
+.chart-card{grid-column:span 8}.side-card{grid-column:span 4}.table-card{grid-column:span 8}.risk-card{grid-column:span 4}.title{font-size:15px;font-weight:800;margin:0 0 12px}.small{font-size:12px;color:var(--muted)}
+svg{width:100%;height:auto;display:block}.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:12px}.legend span:before{content:'';display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}.legend .a:before{background:#2e76c7}.legend .b:before{background:#1f8a70}
+.scenario-box{display:grid;grid-template-columns:1fr auto;gap:8px;padding:12px;border:1px solid var(--border);border-radius:10px;margin-bottom:9px}.scenario-box strong{font-size:13px}.scenario-box span{font-size:14px;font-weight:800}.meter{height:8px;background:#e8eef5;border-radius:99px;overflow:hidden}.meter>div{height:100%;background:linear-gradient(90deg,#2e76c7,#1f8a70);border-radius:99px}
+table{width:100%;border-collapse:collapse;font-size:12px}th{position:sticky;top:0;background:#eef3f8;color:#49576d;text-align:left;padding:9px;border-bottom:1px solid var(--border)}td{padding:9px;border-bottom:1px solid #edf1f5}.num{text-align:right;font-variant-numeric:tabular-nums}.badge{display:inline-block;padding:4px 8px;border-radius:99px;font-size:10px;font-weight:800}.medium{background:#fff0c7;color:#8c6200}.ok{background:#dff5ea;color:#1d6b52}.high{background:#fde2e2;color:#9d2f2f}.barrow{display:grid;grid-template-columns:140px 1fr 110px;gap:10px;align-items:center;margin:10px 0;font-size:12px}.bartrack{height:12px;background:#e9eef5;border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,#2e76c7,#5b9fe2);border-radius:99px}.footer{font-size:11px;color:var(--muted);margin:18px 2px}
+@media(max-width:1000px){.kpi{grid-column:span 6}.chart-card,.side-card,.table-card,.risk-card{grid-column:span 12}.source{margin-left:0}.barrow{grid-template-columns:110px 1fr 95px}}
+@media(max-width:600px){.wrap{padding:12px}.header{padding:20px 16px}.kpi{grid-column:span 12}.kpi .value{font-size:23px}}
+</style>
+</head>
+<body>
+<header class="header"><h1>Painel Executivo — Planejamento e Desembolso Financeiro 2027</h1><p>Forecast, impacto inflacionário, risco orçamentário e análise por setor • modelo aprimorado</p></header>
+<main class="wrap">
+  <section class="toolbar">
+    <div class="control"><label>Cenário macroeconômico</label><select id="scenario"><option value="0.03">Otimista — 3,0%</option><option value="0.038" selected>Base — 3,8%</option><option value="0.05">Conservador — 5,0%</option></select></div>
+    <div class="control"><label>Filtro de setor</label><select id="sectorFilter"><option value="Todos">Todos os setores</option></select></div>
+    <div class="source">Premissa-base: IPCA 2027 de 3,8% no cenário de referência do Banco Central. <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=45693&tipo=Comunicado" target="_blank" rel="noopener">Fonte BCB</a></div>
+  </section>
+
+  <section class="grid">
+    <div class="card kpi accent"><div class="label">Orçamento anual</div><div class="value" id="budget"></div><div class="sub">Base nominal informada</div></div>
+    <div class="card kpi positive"><div class="label">Previsto ajustado IPCA</div><div class="value" id="adjusted"></div><div class="sub" id="monthlyRate"></div></div>
+    <div class="card kpi warning"><div class="label">Impacto da inflação</div><div class="value" id="impact"></div><div class="sub" id="impactPct"></div></div>
+    <div class="card kpi danger"><div class="label">Contingência sugerida</div><div class="value" id="contingency"></div><div class="sub">Reserva gerencial de 3%</div></div>
+
+    <div class="card chart-card"><h2 class="title">Fluxo mensal — original x ajustado pela inflação</h2><div class="small">A projeção ajustada aplica capitalização mensal equivalente ao IPCA anual selecionado.</div><svg id="lineChart" viewBox="0 0 900 300" aria-label="Gráfico de fluxo mensal"></svg><div class="legend"><span class="a">Previsto original</span><span class="b">Previsto ajustado</span></div></div>
+    <div class="card side-card"><h2 class="title">Cenários de inflação 2027</h2><div class="scenario-box"><strong>Otimista</strong><span>3,0%</span><small>Meta / stress de baixa</small><small>—</small></div><div class="scenario-box"><strong>Base</strong><span>3,8%</span><small>BCB — cenário de referência</small><small>—</small></div><div class="scenario-box"><strong>Conservador</strong><span>5,0%</span><small>Stress gerencial de alta</small><small>—</small></div><h2 class="title" style="margin-top:18px">Índice de pressão orçamentária</h2><div class="meter"><div id="pressureBar"></div></div><div class="small" id="pressureText" style="margin-top:7px"></div></div>
+
+    <div class="card table-card"><h2 class="title">Análise financeira por setor</h2><div style="overflow:auto;max-height:430px"><table><thead><tr><th>Setor</th><th class="num">Orçamento</th><th class="num">Ajustado</th><th class="num">Impacto</th><th>Risco</th></tr></thead><tbody id="sectorTable"></tbody></table></div></div>
+    <div class="card risk-card"><h2 class="title">Maiores impactos absolutos</h2><div id="bars"></div><h2 class="title" style="margin-top:20px">Leitura executiva</h2><p class="small" id="insight"></p></div>
+  </section>
+  <div class="footer">Modelo gerencial. A inflação real pode divergir das expectativas. Recomenda-se reforecast trimestral e atualização das premissas macroeconômicas.</div>
+</main>
+<script>
+const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const monthly=[2999466.82,2999466.82,2999466.82,2999466.82,2999466.82,2999466.82,2999466.82,2999466.82,2999466.78,2999466.82,2999466.82,2999466.82];
+const sectors=[
+['Infraestrutura',181380],['Backbone',3882533.76],['Frota',1326607.52],['Comercial',90960],['Eng. Custo fixo',2760000],['Marketing',111480],['Administrativo',12090946.44],['RH',11810400],['Segurança do Trabalho',0],['Operações PF',225600],['Operações PJ',242400],['Almoxarifado',3271294.08]
+];
+const brl=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const pct=new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1});
+const scenario=document.getElementById('scenario'), filter=document.getElementById('sectorFilter');
+sectors.forEach(([s])=>{const o=document.createElement('option');o.value=s;o.textContent=s;filter.appendChild(o)});
+function avgFactor(infl){let sum=0;for(let i=1;i<=12;i++)sum+=Math.pow(1+infl,i/12);return sum/12}
+function adjMonthly(infl){return monthly.map((v,i)=>v*Math.pow(1+infl,(i+1)/12))}
+function drawLine(orig,adj){const svg=document.getElementById('lineChart'), W=900,H=300,p={l:65,r:18,t:26,b:48};svg.innerHTML='';const all=orig.concat(adj),min=Math.min(...all)*.985,max=Math.max(...all)*1.01;const x=i=>p.l+i*(W-p.l-p.r)/11,y=v=>p.t+(max-v)*(H-p.t-p.b)/(max-min);for(let j=0;j<5;j++){const yy=p.t+j*(H-p.t-p.b)/4;const val=max-j*(max-min)/4;svg.insertAdjacentHTML('beforeend',`<line x1="${p.l}" y1="${yy}" x2="${W-p.r}" y2="${yy}" stroke="#e4eaf1"/><text x="${p.l-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#758198">${(val/1e6).toFixed(2)}M</text>`)}months.forEach((m,i)=>svg.insertAdjacentHTML('beforeend',`<text x="${x(i)}" y="${H-20}" text-anchor="middle" font-size="11" fill="#758198">${m}</text>`));const path=a=>a.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v)).join(' ');svg.insertAdjacentHTML('beforeend',`<path d="${path(orig)}" fill="none" stroke="#2e76c7" stroke-width="3"/><path d="${path(adj)}" fill="none" stroke="#1f8a70" stroke-width="3"/>`);adj.forEach((v,i)=>svg.insertAdjacentHTML('beforeend',`<circle cx="${x(i)}" cy="${y(v)}" r="3.2" fill="#1f8a70"><title>${months[i]}: ${brl.format(v)}</title></circle>`))}
+function render(){const infl=+scenario.value,f=avgFactor(infl),selected=filter.value,subset=selected==='Todos'?sectors:sectors.filter(x=>x[0]===selected);const budget=subset.reduce((a,x)=>a+x[1],0), adjusted=budget*f, impact=adjusted-budget, cont=adjusted*.03;document.getElementById('budget').textContent=brl.format(budget);document.getElementById('adjusted').textContent=brl.format(adjusted);document.getElementById('impact').textContent=brl.format(impact);document.getElementById('contingency').textContent=brl.format(cont);document.getElementById('monthlyRate').textContent='Inflação mensal equivalente: '+pct.format(Math.pow(1+infl,1/12)-1);document.getElementById('impactPct').textContent='Acréscimo médio no fluxo: '+pct.format(f-1);const pressure=Math.min(100,(f-1)/.06*100);document.getElementById('pressureBar').style.width=pressure+'%';document.getElementById('pressureText').textContent=(pressure<45?'Pressão moderada':pressure<75?'Pressão relevante':'Pressão elevada')+' • '+pct.format(f-1)+' de efeito médio no desembolso';const rows=subset.map(([s,b])=>{const a=b*f,i=a-b,r=a>b*1.05?'ALTO':a>b?'MÉDIO':'CONTROLADO',cls=r==='ALTO'?'high':r==='MÉDIO'?'medium':'ok';return `<tr><td>${s}</td><td class="num">${brl.format(b)}</td><td class="num">${brl.format(a)}</td><td class="num">${brl.format(i)}</td><td><span class="badge ${cls}">${r}</span></td></tr>`}).join('');document.getElementById('sectorTable').innerHTML=rows;const ranked=subset.map(([s,b])=>[s,b*(f-1)]).sort((a,b)=>b[1]-a[1]).slice(0,5),mx=Math.max(1,...ranked.map(x=>x[1]));document.getElementById('bars').innerHTML=ranked.map(([s,v])=>`<div class="barrow"><div>${s}</div><div class="bartrack"><div class="barfill" style="width:${v/mx*100}%"></div></div><div class="num">${brl.format(v)}</div></div>`).join('');const top=ranked[0];document.getElementById('insight').textContent=top?`${top[0]} concentra o maior impacto inflacionário estimado no recorte atual (${brl.format(top[1])}). Recomenda-se priorizar renegociação de contratos, antecipação de compras críticas e reforecast trimestral.`:'Sem valores no recorte.';drawLine(monthly,adjMonthly(infl))}
+scenario.addEventListener('change',render);filter.addEventListener('change',render);render();
+</script>
+</body></html>
